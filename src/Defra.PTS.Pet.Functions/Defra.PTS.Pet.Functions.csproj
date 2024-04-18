@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AzureFunctionsVersion>v4</AzureFunctionsVersion>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<DocumentationFile>bin\Debug\net6.0\Defra.PTS.Pet.Functions.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Defra.Trade.Common.Api" Version="2.0.5" />
+    <PackageReference Include="Defra.Trade.Common.Functions" Version="2.7.2" />
+    <PackageReference Include="Defra.Trade.Common.Security" Version="2.0.5" />
+    <PackageReference Include="Defra.Trade.Common.Soc" Version="1.1.16" />
+    <PackageReference Include="Defra.Trade.Common.Sql" Version="2.0.3" />
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Sql" Version="2.0.144" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.2.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Defra.PTS.Pet.ApiServices\Defra.PTS.Pet.ApiServices.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+	  <None Update="local.settings.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+	  </None>
+  </ItemGroup>
+</Project>

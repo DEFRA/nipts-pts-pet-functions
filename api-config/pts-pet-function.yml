@@ -1,0 +1,78 @@
+version: 0.0.1
+apimServiceName: "#{{ Environment.Name }}TRA#{{ nc-function-infrastructure }}#{{ nc-resource-apimanagement }}1002"
+apiVersionSets:
+  - id: trade-eucerts-api-dev
+    displayName: ETrade API DEV
+    description: Development ETrade APIs
+    versioningScheme: Segment
+  - id: trade-eucerts-api
+    displayName: ETrade API
+    description: ETrade APIs
+    versioningScheme: Segment
+apis:
+  - name: trade-eucerts-api-v2-dev
+    type: http
+    displayName: ETrade API Dev
+    description: ETrade APIs.
+    serviceUrl: https://defra.mock
+    openApiSpec: v1\swagger.json
+    policy: policies\apiPolicyHeadersMock.xml
+    suffix: trade-eucerts/dev
+    subscriptionRequired: true
+    apiVersion: v2
+    apiVersionDescription: Version 2 Dev APIs
+    apiVersionSetId: trade-eucerts-api-dev
+    products: trd-dev
+    authenticationSettings:
+      oAuth2:
+        authorizationServerId: OAuth-Server
+      subscriptionKeyRequired: true
+    diagnostic:
+      name: applicationinsights
+      alwaysLog: allErrors
+      loggerId: "#{{ Environment.Name }}TRD#{{ nc-function-infrastructure }}#{{ nc-resource-appinsights }}1001"
+      sampling:
+        samplingType: fixed
+        percentage: 100
+      enableHttpCorrelationHeaders: true
+  - name: trade-eucerts-api-v2
+    type: http
+    displayName: ETrade API
+    description: ETrade APIs.
+    serviceUrl: "https://#{{ Environment.Name }}TRS#{{ nc-function-web }}#{{ nc-resource-webapp }}1030.azurewebsites.net/"
+    openApiSpec: v1\swagger.json
+    policy: policies\apiPolicyHeaders.xml
+    suffix: trade-eucerts
+    subscriptionRequired: true
+    apiVersion: v2
+    apiVersionDescription: Version 2 Live APIs
+    apiVersionSetId: trade-eucerts-api
+    products: trd-prod
+    authenticationSettings:
+      oAuth2:
+        authorizationServerId: OAuth-Server
+      subscriptionKeyRequired: true
+    diagnostic:
+      name: applicationinsights
+      alwaysLog: allErrors
+      loggerId: "#{{ Environment.Name }}TRD#{{ nc-function-infrastructure }}#{{ nc-resource-appinsights }}1001"
+      sampling:
+        samplingType: fixed
+        percentage: 100
+      enableHttpCorrelationHeaders: true
+    dependsOn: trade-eucerts-api-v2-dev
+templateParameters:
+    - name: secondaryServiceUrl
+      value: "https://#{{ Environment.Name }}TRS#{{ nc-function-web }}#{{ nc-resource-webapp }}1230.azurewebsites.net/"
+    - name: aspClientId
+      reference:
+        keyVault:
+          id: "/subscriptions/#{{ subscriptionId }}/resourceGroups/#{{ Environment.Name }}TRD#{{ nc-function-infrastructure }}#{{ nc-resource-resourcegroup }}1001/providers/Microsoft.KeyVault/vaults/#{{ Environment.Name }}TRD#{{ nc-function-infrastructure }}#{{ nc-resource-keyvault }}1001"
+        secretName: "TRSWEBAS1008-OAuth-ClientId"      
+    - name: roles
+      values: 
+        roleTradeEUCertificatesRead: "#{{ roleTradeEUCertificatesRead }}"
+        roleTradeEUCertificatesUpdate: "#{{ roleTradeEUCertificatesUpdate }}"
+outputLocation: publish-templates
+linked: false
+baseFileName: trade-eucerts-api

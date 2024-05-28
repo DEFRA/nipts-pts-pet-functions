@@ -34,7 +34,7 @@ resources:
       ref: master
 
 variables:
-  APIName: Defra.PTS.Pet.Fuctions
+  APIName: DEFRA_nipts-pts-pet-functions
 
 extends:
   template: /templates/basic-webapp-deploy-pipeline.yaml@PipelineCommon

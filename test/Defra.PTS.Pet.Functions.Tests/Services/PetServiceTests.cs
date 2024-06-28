@@ -38,9 +38,9 @@ namespace Defra.PTS.Pet.Functions.Tests.Services
                 },
                 PetMicrochipDate = new PetMicrochipDateViewModel
                 {
-                    Day = 1,
-                    Month = 1,
-                    Year = 2008,
+                    Day = "1",
+                    Month = "1",
+                    Year = "2008",
                     Title = "Test",
                     IsCompleted = true,
                 },

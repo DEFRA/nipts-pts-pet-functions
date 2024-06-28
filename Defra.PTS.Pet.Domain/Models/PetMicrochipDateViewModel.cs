@@ -7,11 +7,11 @@ namespace Defra.PTS.Pet.Domain.Models;
 [ExcludeFromCodeCoverage]
 public class PetMicrochipDateViewModel : MultiPageViewModel
 {
-    public int? Day { get; set; }
+    public string? Day { get; set; }
 
-    public int? Month { get; set; }
+    public string? Month { get; set; }
 
-    public int? Year { get; set; }
+    public string? Year { get; set; }
 
     public DateTime? MicrochippedDate
     {
@@ -19,7 +19,10 @@ public class PetMicrochipDateViewModel : MultiPageViewModel
         {
             try
             {
-                return new DateTime(Year.GetValueOrDefault(), Month.GetValueOrDefault(), Day.GetValueOrDefault());
+                _ = int.TryParse(Day, out int day);
+                _ = int.TryParse(Month, out int month);
+                _ = int.TryParse(Year, out int year);
+                return new DateTime(year, month, day);
             }
             catch
             {

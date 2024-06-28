@@ -22,7 +22,7 @@ public class PetMicrochipDateViewModel : MultiPageViewModel
                 _ = int.TryParse(Day, out int day);
                 _ = int.TryParse(Month, out int month);
                 _ = int.TryParse(Year, out int year);
-                return new DateTime(year, month, day);
+                return new DateTime(year, month, day, 0, 0, 0, DateTimeKind.Utc);
             }
             catch
             {

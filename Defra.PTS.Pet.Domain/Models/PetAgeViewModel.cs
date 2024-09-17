@@ -8,13 +8,22 @@ namespace Defra.PTS.Pet.Domain.Models;
 public class PetAgeViewModel : MultiPageViewModel
 {
     public YesNo KnowDoB {  get; set; }
+   public string? Day { get; set; }
+
+    public string? Month { get; set; }
+
+    public string? Year { get; set; }
+
     public DateTime? BirthDate
     {
         get
         {
             try
             {
-                return new DateTime(Year.GetValueOrDefault(), Month.GetValueOrDefault(), Day.GetValueOrDefault());
+                _ = int.TryParse(Day, out int day);
+                _ = int.TryParse(Month, out int month);
+                _ = int.TryParse(Year, out int year);
+                return new DateTime(year, month, day, 0, 0, 0, DateTimeKind.Utc);
             }
             catch
             {
@@ -22,12 +31,6 @@ public class PetAgeViewModel : MultiPageViewModel
             }
         }
     }
-
-    public int? Day { get; set; }
-
-    public int? Month { get; set; }
-
-    public int? Year { get; set; }
 
     public int? ApproximateAge { get; set; }
 

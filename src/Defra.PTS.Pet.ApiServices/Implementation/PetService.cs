@@ -64,7 +64,7 @@ namespace Defra.PTS.Pet.ApiServices.Implementation
                 petDocumentEvidence.Add(new PetDocumentEvidenceEntity()
                 {
                     PetId = newPetDbEntry.Id,
-                    EvidenceReference = item.fileName,
+                    EvidenceReference = item.FileName,
                     CreatedBy = petViewModel.CreatedBy,
                     CreatedOn = DateTime.Now
                 });

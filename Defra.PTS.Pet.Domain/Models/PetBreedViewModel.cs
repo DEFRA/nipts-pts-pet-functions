@@ -9,9 +9,9 @@ public class PetBreedViewModel : MultiPageViewModel
 {
     public PetSpecies PetSpecies { get; set; }
     public BreedType BreedType { get; set; }
-    public string BreedName { get; set; }
+    public string? BreedName { get; set; }
     public int BreedId { get; set; }
-    public string BreedAdditionalInfo { get; set; }
+    public string? BreedAdditionalInfo { get; set; }
     public override bool Validate(ModelStateDictionary modelState)
     {
         return true;

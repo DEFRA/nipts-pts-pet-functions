@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 namespace Defra.PTS.Pet.Repositories.Implementation
 {
     [ExcludeFromCodeCoverage]
-    public class PetDocumentEvidenceRepository : Repository<PetDocumentEvidenceEntity>, IPetDocumentEvidenceRepository
+    public class PetDocumentEvidenceRepository(DbContext dbContext) : Repository<PetDocumentEvidenceEntity>(dbContext), IPetDocumentEvidenceRepository
     {
-        private PetDbContext petContext
+        private PetDbContext? PetContext
         {
             get
             {
@@ -21,14 +21,10 @@ namespace Defra.PTS.Pet.Repositories.Implementation
             }
         }
 
-        public PetDocumentEvidenceRepository(DbContext dbContext) : base(dbContext)
-        {
-        }
-
         public async Task<bool> SavePetDocumentEvidence(List<PetDocumentEvidenceEntity> petDocumentEvidences)
         {
-            petContext.PetDocumentEvidence.AddRange(petDocumentEvidences);
-            await petContext.SaveChangesAsync();
+            PetContext!.PetDocumentEvidence!.AddRange(petDocumentEvidences);
+            await PetContext.SaveChangesAsync();
             return true; 
         }
     }

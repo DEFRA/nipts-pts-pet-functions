@@ -8,9 +8,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace Defra.PTS.Pet.Repositories.Implementation
 {
     [ExcludeFromCodeCoverage]
-    public class PetRepository : Repository<PetEntity>, IPetRepository
+    public class PetRepository(DbContext dbContext) : Repository<PetEntity>(dbContext), IPetRepository
     {        
-        private PetDbContext petContext
+        private PetDbContext? PetContext
         {
             get
             {
@@ -18,24 +18,19 @@ namespace Defra.PTS.Pet.Repositories.Implementation
             }
         }
 
-        public PetRepository(DbContext dbContext) : base(dbContext)
-        {
-            
-        }
-
         public async Task CreatePet(PetEntity pet)
         {
-            await petContext.Pet.AddAsync(pet);
-            await petContext.SaveChangesAsync();            
+            await PetContext!.Pet!.AddAsync(pet);
+            await PetContext.SaveChangesAsync();            
         }
 
         public async Task<bool> PerformHealthCheckLogic()
         {
             // Attempt to open a connection to the database
-            await petContext.Database.OpenConnectionAsync();
+            await PetContext!.Database.OpenConnectionAsync();
 
             // Check if the connection is open
-            if (petContext.Database.GetDbConnection().State == ConnectionState.Open)
+            if (PetContext.Database.GetDbConnection().State == ConnectionState.Open)
             {
                 return true;
             }

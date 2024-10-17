@@ -16,13 +16,9 @@ using Microsoft.OpenApi.Models;
 
 namespace Defra.PTS.Pet.Functions.Functions.Pet
 {
-    public class CreatePetEntry
+    public class CreatePetEntry(IPetService petService)
     {
-        private readonly IPetService _petService;
-        public CreatePetEntry(IPetService petService)
-        {
-            _petService = petService;
-        }
+        private readonly IPetService _petService = petService;
 
         /// <summary>
         /// Create Pet By Pet Details
@@ -31,7 +27,7 @@ namespace Defra.PTS.Pet.Functions.Functions.Pet
         /// <param name="log"></param>
         /// <returns></returns>
         [FunctionName("CreatePet")]
-        [OpenApiOperation(operationId: "CreatePet", tags: new[] { "Create" })]
+        [OpenApiOperation(operationId: "CreatePet", tags: ["Create"])]
         [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
         [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(PetViewModel), Description = "Create Pet")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
@@ -41,15 +37,12 @@ namespace Defra.PTS.Pet.Functions.Functions.Pet
         {
             try
             {
-                var input = req?.Body;
-                if (input == null)
-                {
-                    throw new InvalidDataException("Invalid pet input, is NUll or Empty");
-                }
-
+                var input = (req?.Body) ?? throw new InvalidDataException("Invalid pet input, is NUll or Empty");
                 string pet = await new StreamReader(input).ReadToEndAsync();
 
+#pragma warning disable CA1869 // Cache and reuse 'JsonSerializerOptions' instances
                 var petViewModel = JsonSerializer.Deserialize<PetViewModel>(pet, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+#pragma warning restore CA1869 // Cache and reuse 'JsonSerializerOptions' instances
 
                 if (petViewModel.PetBreed == null)
                 {

@@ -14,7 +14,7 @@ public class PetAgeViewModel : MultiPageViewModel
         {
             try
             {
-                return new DateTime(Year.GetValueOrDefault(), Month.GetValueOrDefault(), Day.GetValueOrDefault());
+                return new DateTime(Year.GetValueOrDefault(), Month.GetValueOrDefault(), Day.GetValueOrDefault(),0,0,0, DateTimeKind.Utc);
             }
             catch
             {

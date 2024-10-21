@@ -8,7 +8,7 @@ namespace Defra.PTS.Pet.Domain.Models
     {
         public bool IsCompleted { get; set; }
 
-        public string Title { get; set; } = "Test Title";
+        public string? Title { get; set; } = "Test Title";
 
         public abstract bool Validate(ModelStateDictionary modelState);
 

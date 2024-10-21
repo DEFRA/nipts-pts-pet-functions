@@ -7,7 +7,7 @@ namespace Defra.PTS.Pet.Domain.Models;
 [ExcludeFromCodeCoverage]
 public class PetIdentificationEvidenceViewModel : MultiPageViewModel
 {
-    public string fileName { get; set; }
+    public string? FileName { get; set; }
 
     public byte[]? FileUpload { get; set; }
 

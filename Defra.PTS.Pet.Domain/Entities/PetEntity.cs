@@ -9,7 +9,7 @@ public class PetEntity
     public int? BreedId { get; set; }
     public int? BreedTypeId { get; set; }
     public string? AdditionalInfoMixedBreedOrUnknown { get; set; }
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public int SexId { get; set; }
     public int IsDateOfBirthKnown { get; set; }
     public DateTime? DOB { get; set; }

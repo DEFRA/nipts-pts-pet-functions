@@ -79,7 +79,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Services
                     HasUniqueFeature = YesNo.No,
                     FeatureDescription = "Test",                    
                 },
-                PetIdentificationEvidenceViewModel = new List<PetIdentificationEvidenceViewModel> { new PetIdentificationEvidenceViewModel() { fileName = "item1.png" } }
+                PetIdentificationEvidenceViewModel = new List<PetIdentificationEvidenceViewModel> { new PetIdentificationEvidenceViewModel() { FileName = "item1.png" } }
             };
 
             _mockPetRepostory!.Setup(x => x.CreatePet(It.IsAny<PetEntity>()));

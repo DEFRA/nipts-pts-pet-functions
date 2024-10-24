@@ -6,7 +6,7 @@ namespace Defra.PTS.Pet.Domain.Models;
 [ExcludeFromCodeCoverage]
     public class AcknowledgementViewModel : MultiPageViewModel
     {
-        public string Reference { get; set; }
+        public string? Reference { get; set; }
 
         public bool IsSuccess { get; set; }
 

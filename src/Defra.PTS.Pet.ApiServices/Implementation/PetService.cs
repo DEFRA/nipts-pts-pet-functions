@@ -8,37 +8,32 @@ using System.Linq;
 
 namespace Defra.PTS.Pet.ApiServices.Implementation
 {
-    public class PetService : IPetService
+    public class PetService(
+        IPetRepository petRepository,
+        IPetDocumentEvidenceRepository petDocumentEvidenceRepository) : IPetService
     {        
-        private readonly IPetRepository _petRepository;
-        private readonly IPetDocumentEvidenceRepository _petDocumentEvidenceRepository;
-        public PetService(
-            IPetRepository petRepository,
-            IPetDocumentEvidenceRepository petDocumentEvidenceRepository)
-        {            
-            _petRepository = petRepository;
-            _petDocumentEvidenceRepository = petDocumentEvidenceRepository;
-        }
+        private readonly IPetRepository _petRepository = petRepository;
+        private readonly IPetDocumentEvidenceRepository _petDocumentEvidenceRepository = petDocumentEvidenceRepository;
 
         public async Task<Guid> CreatePet(PetViewModel petViewModel)
         {
             var newPetDbEntry = new PetEntity()
             {                
                 IdentificationType = (int)PetIdentificationType.Microchipped,
-                MicrochipNumber = petViewModel.PetMicrochip.MicrochipNumber,
+                MicrochipNumber = petViewModel.PetMicrochip!.MicrochipNumber,
                 MicrochippedDate = petViewModel.PetMicrochipDate?.MicrochippedDate,
-                SpeciesId = (int)petViewModel.PetSpecies.PetSpecies,
-                BreedTypeId = (int)petViewModel.PetBreed.BreedType,
+                SpeciesId = (int)petViewModel.PetSpecies!.PetSpecies,
+                BreedTypeId = (int)petViewModel.PetBreed!.BreedType,
                 BreedId = petViewModel.PetBreed.BreedId,
                 AdditionalInfoMixedBreedOrUnknown = petViewModel.PetBreed?.BreedAdditionalInfo,
-                Name = petViewModel.PetName.PetName,
-                SexId = (int)petViewModel.PetGender.Gender,
-                IsDateOfBirthKnown = (int)petViewModel.PetAge.KnowDoB,
+                Name = petViewModel.PetName!.PetName,
+                SexId = (int)petViewModel.PetGender!.Gender,
+                IsDateOfBirthKnown = (int)petViewModel.PetAge!.KnowDoB,
                 DOB = petViewModel.PetAge?.BirthDate,
                 ApproximateAge = petViewModel.PetAge?.ApproximateAge,
-                ColourId = petViewModel.PetColour.PetColour,
+                ColourId = petViewModel.PetColour!.PetColour,
                 OtherColour = petViewModel.PetColour?.PetColourOther,
-                HasUniqueFeature = (int)petViewModel.PetFeature.HasUniqueFeature,
+                HasUniqueFeature = (int)petViewModel.PetFeature!.HasUniqueFeature,
                 UniqueFeatureDescription = petViewModel.PetFeature?.FeatureDescription,
                 CreatedBy = petViewModel.CreatedBy,
                 CreatedOn = DateTime.Now
@@ -64,7 +59,7 @@ namespace Defra.PTS.Pet.ApiServices.Implementation
                 petDocumentEvidence.Add(new PetDocumentEvidenceEntity()
                 {
                     PetId = newPetDbEntry.Id,
-                    EvidenceReference = item.fileName,
+                    EvidenceReference = item.FileName,
                     CreatedBy = petViewModel.CreatedBy,
                     CreatedOn = DateTime.Now
                 });

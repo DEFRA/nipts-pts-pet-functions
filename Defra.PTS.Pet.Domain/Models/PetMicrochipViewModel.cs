@@ -9,7 +9,7 @@ namespace Defra.PTS.Pet.Domain.Models
 {
     public class PetMicrochipViewModel : MultiPageViewModel
     {
-        public string MicrochipNumber { get; set; }
+        public string? MicrochipNumber { get; set; }
 
         public override bool Validate(ModelStateDictionary modelState)
         {

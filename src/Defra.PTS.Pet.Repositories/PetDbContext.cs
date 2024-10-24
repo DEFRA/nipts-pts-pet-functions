@@ -5,15 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace Defra.PTS.Pet.Repositories
 {
     [ExcludeFromCodeCoverage]
-    public class PetDbContext : DbContext
+    public class PetDbContext(DbContextOptions<PetDbContext> options) : DbContext(options)
     {
-        //Configuration from settings
-        public PetDbContext(DbContextOptions<PetDbContext> options) : base(options)
-        {
-
-        }
-
-        public DbSet<PetEntity> Pet { get; set; }
-        public DbSet<PetDocumentEvidenceEntity> PetDocumentEvidence { get; set; }
+        public DbSet<PetEntity>? Pet { get; set; }
+        public DbSet<PetDocumentEvidenceEntity>? PetDocumentEvidence { get; set; }
     }
 }

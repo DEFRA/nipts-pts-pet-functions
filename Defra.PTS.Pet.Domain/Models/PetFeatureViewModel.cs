@@ -8,7 +8,7 @@ namespace Defra.PTS.Pet.Domain.Models;
 public class PetFeatureViewModel : MultiPageViewModel
 {
     public YesNo HasUniqueFeature {  get; set; }
-    public string FeatureDescription { get; set; }
+    public string? FeatureDescription { get; set; }
 
     [ExcludeFromCodeCoverage]
     public override bool Validate(ModelStateDictionary modelState)

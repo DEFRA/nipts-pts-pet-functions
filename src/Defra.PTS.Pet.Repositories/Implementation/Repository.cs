@@ -10,14 +10,9 @@ using System.Threading.Tasks;
 namespace Defra.PTS.Pet.Repositories.Implementation
 {
     [ExcludeFromCodeCoverage]
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity>(DbContext dbContext) : IRepository<TEntity> where TEntity : class
     {
-        protected DbContext _dbContext;
-
-        public Repository(DbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        protected DbContext _dbContext = dbContext;
 
         public async Task Add(TEntity entity)
         {
@@ -31,7 +26,7 @@ namespace Defra.PTS.Pet.Repositories.Implementation
 
         public void Delete(object id)
         {
-            TEntity entity = _dbContext.Set<TEntity>().Find(id);
+            TEntity? entity = _dbContext.Set<TEntity>().Find(id);
             if (entity != null)
             {
                 _dbContext.Set<TEntity>().Remove(entity);
@@ -40,12 +35,12 @@ namespace Defra.PTS.Pet.Repositories.Implementation
 
         public TEntity Find(object id)
         {
-            return _dbContext.Set<TEntity>().Find(id);
+            return _dbContext.Set<TEntity>().Find(id)!;
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return _dbContext.Set<TEntity>().ToList();
+            return [.. _dbContext.Set<TEntity>()];
         }
 
         public void Remove(TEntity entity)

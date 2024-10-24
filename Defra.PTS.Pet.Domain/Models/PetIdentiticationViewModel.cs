@@ -15,7 +15,7 @@ public class PetIdentificationViewModel : MultiPageViewModel
 
     public PetIdentificationType IdentificationType { get; set; } 
 
-    public string MicrochipNumber { get; set; }
+    public string? MicrochipNumber { get; set; }
 
     public override bool Validate(ModelStateDictionary modelState)
     {

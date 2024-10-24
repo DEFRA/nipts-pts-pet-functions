@@ -37,8 +37,6 @@ namespace Defra.PTS.Pet.Functions
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
         {
-            var context = builder.GetContext();
-
             builder.ConfigurationBuilder
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)

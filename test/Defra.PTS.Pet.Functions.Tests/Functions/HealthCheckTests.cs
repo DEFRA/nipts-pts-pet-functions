@@ -31,7 +31,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions
         {
             _mockPetService!.Setup(x => x.PerformHealthCheckLogic()).ReturnsAsync(true);
 
-            var result = await _sut!.Run(_httpRequestMock.Object, _mockLogger!.Object);
+            var result = await _sut!.Run(_httpRequestMock!.Object, _mockLogger!.Object);
             var okResult = result as OkResult;
 
 
@@ -44,7 +44,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions
         {
             _mockPetService!.Setup(x => x.PerformHealthCheckLogic()).ReturnsAsync(false);
 
-            var result = await _sut!.Run(_httpRequestMock.Object, _mockLogger!.Object);
+            var result = await _sut!.Run(_httpRequestMock!.Object, _mockLogger!.Object);
             var statusCodeResult = result as StatusCodeResult;
 
 

@@ -65,12 +65,6 @@ namespace Defra.PTS.Pet.Functions.Functions.Pet
 
                 return new BadRequestObjectResult("Cannot create Pet as Pet Model Cannot be Deserialized from malformed json or null requsest body");
             }
-            catch (Exception ex)
-            {
-                log.LogError(ex, "An exception occurred");
-
-                throw;
-            }    
         }
     }
 }

@@ -4,7 +4,7 @@ using Moq;
 using NUnit.Framework;
 using Microsoft.Extensions.Logging;
 using Defra.PTS.Pet.ApiServices.Interface;
-using test = Defra.PTS.Pet.Functions.Functions.Breed;
+using PetBreed = Defra.PTS.Pet.Functions.Functions.Breed;
 using Defra.PTS.Pet.Domain.Entities;
 using Defra.PTS.Pet.Domain.Models;
 using Microsoft.AspNetCore.Routing;
@@ -16,12 +16,12 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Breed
     {
         private readonly Mock<HttpRequest> _mockRequest = new();        
         private readonly Mock<IBreedService> _mockBreedService = new();
-        test.Breed? _sut;
+        PetBreed.Breed? _sut;
 
         [SetUp]
         public void SetUp()
         {
-            _sut = new test.Breed(_mockBreedService.Object);
+            _sut = new PetBreed.Breed(_mockBreedService.Object);
         }
 
         [TearDown]

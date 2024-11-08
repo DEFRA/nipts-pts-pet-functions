@@ -14,7 +14,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions
         private Mock<IPetService>? _mockPetService;        
         private Mock<ILogger>? _mockLogger;
         private HealthCheck? _sut;
-        private Mock<HttpRequest> _httpRequestMock;
+        private Mock<HttpRequest>? _httpRequestMock;
 
         [SetUp]
         public void SetUp()

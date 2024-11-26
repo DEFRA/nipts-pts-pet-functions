@@ -55,25 +55,16 @@ namespace Defra.PTS.Pet.Functions.Functions.Pet
             }
             catch(InvalidDataException ex)
             {
-                log.LogError(ex, "Error Stack: ", ex.StackTrace);
-                log.LogError(ex, "Exception Message: ", ex.Message);
+                log.LogError(ex,"An exception occurred");
 
                 return new BadRequestObjectResult("Invalid pet input, is NUll or Empty");
             }
             catch(JsonException ex)
             {
-                log.LogError(ex, "Error Stack: ", ex.StackTrace);
-                log.LogError(ex, "Exception Message: ", ex.Message);
+                log.LogError(ex, "An exception occurred");
 
                 return new BadRequestObjectResult("Cannot create Pet as Pet Model Cannot be Deserialized from malformed json or null requsest body");
             }
-            catch (Exception ex)
-            {
-                log.LogError(ex, "Error Stack: ", ex.StackTrace);
-                log.LogError(ex, "Exception Message: ", ex.Message);
-
-                throw;
-            }    
         }
     }
 }

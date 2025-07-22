@@ -30,7 +30,7 @@ public class Breed(IBreedService breedService)
     /// <param name="result"></param>        
     /// <returns></returns>
     [FunctionName("GetBreed")]
-    [OpenApiOperation(operationId: "GetBreed", tags: ["Breeds"])]
+    [OpenApiOperation(operationId: "GetBreed", tags: "Breeds")]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
     [OpenApiParameter(name: "speciesId", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **SpeciesId** parameter")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
@@ -58,7 +58,7 @@ public class Breed(IBreedService breedService)
     /// <param name="petColours"></param>        
     /// <returns></returns>
     [FunctionName("GetColours")]
-    [OpenApiOperation(operationId: "GetColours", tags: ["Colours"])]
+    [OpenApiOperation(operationId: "GetColours", tags: "Colours")]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
     [OpenApiParameter(name: "speciesId", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **SpeciesId** parameter")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]

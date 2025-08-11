@@ -24,7 +24,7 @@ public static class CheckPet
     /// <param name="result"></param>        
     /// <returns></returns>
     [FunctionName("CheckMicrochip")]
-    [OpenApiOperation(operationId: "CheckMicrochip", tags: ["Check"])]
+    [OpenApiOperation(operationId: "CheckMicrochip", tags: "Check")]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
     [OpenApiParameter(name: "microchipnumber", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **Name** parameter")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]

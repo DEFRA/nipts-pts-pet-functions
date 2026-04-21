@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using Defra.PTS.Pet.Functions.Functions.Pet;
 using Microsoft.AspNetCore.Mvc;
 using Defra.PTS.Pet.Domain.Entities;
+using Defra.PTS.Pet.ApiServices.Interface;
+using Microsoft.AspNetCore.Routing;
 
 namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
 {
@@ -12,21 +14,24 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
     public class CheckPetTests
     {
         private readonly Mock<HttpRequest> _requestMoq = new();
+        private readonly Mock<IPetService> _mockPetService = new();
 
         [TearDown]
         public void TearDown()
         {
             _requestMoq.Reset();
+            _mockPetService.Reset();
         }
 
-
         [TestCase("123456789012345", "123456789012345")]
-        public void CheckMicrochip_WhenMicroChipExist_Then_ReturnsValidMicroChip(string microChipNumber, string expectedResult)
+        public async Task CheckMicrochip_WhenMicroChipExist_Then_ReturnsValidMicroChip(string microChipNumber, string expectedResult)
         {
-            // var pets = new List<PetEntity>() { new PetEntity() { MicrochipNumber = microChipNumber } };
+            var routeDict = new RouteValueDictionary { ["microchipnumber"] = microChipNumber };
+            _requestMoq.Setup(a => a.RouteValues).Returns(routeDict);
+            _mockPetService.Setup(a => a.CheckMicrochipAsync(microChipNumber)).ReturnsAsync(microChipNumber);
 
-            var checkPet = new CheckPet(null); // TODO: Provide a mock or real IPetService as needed
-            var result = checkPet.CheckMicrochip(_requestMoq.Object).GetAwaiter().GetResult();
+            var checkPet = new CheckPet(_mockPetService.Object);
+            var result = await checkPet.CheckMicrochip(_requestMoq.Object);
             var okResult = result as OkObjectResult;
 
             Assert.IsNotNull(okResult);
@@ -35,12 +40,14 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
         }
 
         [TestCase("123456789012345", "")]
-        public void CheckMicrochip_WhenMicroChipDoesntExist_Then_ReturnsEmptyMicroChip(string microChipNumber, string expectedResult)
+        public async Task CheckMicrochip_WhenMicroChipDoesntExist_Then_ReturnsEmptyMicroChip(string microChipNumber, string expectedResult)
         {
-            // var pets = new List<PetEntity>();
+            var routeDict = new RouteValueDictionary { ["microchipnumber"] = microChipNumber };
+            _requestMoq.Setup(a => a.RouteValues).Returns(routeDict);
+            _mockPetService.Setup(a => a.CheckMicrochipAsync(microChipNumber)).ReturnsAsync((string?)null);
 
-            var checkPet = new CheckPet(null); // TODO: Provide a mock or real IPetService as needed
-            var result = checkPet.CheckMicrochip(_requestMoq.Object).GetAwaiter().GetResult();
+            var checkPet = new CheckPet(_mockPetService.Object);
+            var result = await checkPet.CheckMicrochip(_requestMoq.Object);
             var okResult = result as OkObjectResult;
 
             Assert.IsNotNull(okResult);
@@ -48,21 +55,18 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
             Assert.AreEqual(expectedResult, okResult?.Value);
         }
 
-
         [TestCase("123456789012345")]
-        public void CheckMicrochip_WhenResultDoesntExist_Then_ReturnsNotFoundObjectResult(string microChipNumber)
+        public async Task CheckMicrochip_WhenMicrochipNumberIsEmpty_Then_ReturnsBadRequest(string microChipNumber)
         {
-            var expectedResult = $"Cannot get pets for Microchip [{microChipNumber}]";
-            // List<PetEntity>? pets = null;
-            _requestMoq!.Setup(a => a.Path).Returns($"/api/microchip/{microChipNumber}");
+            var routeDict = new RouteValueDictionary { ["microchipnumber"] = "" };
+            _requestMoq.Setup(a => a.RouteValues).Returns(routeDict);
 
-            var checkPet = new CheckPet(null); // TODO: Provide a mock or real IPetService as needed
-            var result = checkPet.CheckMicrochip(_requestMoq.Object).GetAwaiter().GetResult();
-            var notFoundResult = result as NotFoundObjectResult;
+            var checkPet = new CheckPet(_mockPetService.Object);
+            var result = await checkPet.CheckMicrochip(_requestMoq.Object);
+            var badRequestResult = result as BadRequestObjectResult;
 
-            Assert.IsNotNull(notFoundResult);
-            Assert.AreEqual(404, notFoundResult?.StatusCode);
-            Assert.AreEqual(expectedResult, notFoundResult?.Value);
-        }   
+            Assert.IsNotNull(badRequestResult);
+            Assert.AreEqual(400, badRequestResult?.StatusCode);
+        }
     }
 }

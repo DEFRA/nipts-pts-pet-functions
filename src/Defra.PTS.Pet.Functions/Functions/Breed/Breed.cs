@@ -10,7 +10,6 @@ using Defra.PTS.Pet.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Microsoft.Azure.Functions.Worker;
 
 #pragma warning disable CA1822 

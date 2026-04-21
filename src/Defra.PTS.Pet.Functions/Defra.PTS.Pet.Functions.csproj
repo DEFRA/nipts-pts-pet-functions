@@ -14,10 +14,9 @@
     <PackageReference Include="Defra.Trade.Common.Soc" Version="1.1.16" />
     <PackageReference Include="Defra.Trade.Common.Sql" Version="2.0.3" />
     <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Sql" Version="3.0.534" />
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.5.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.3.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="1.3.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Defra.PTS.Pet.ApiServices\Defra.PTS.Pet.ApiServices.csproj" />

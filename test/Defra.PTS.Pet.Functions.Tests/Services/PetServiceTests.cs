@@ -14,6 +14,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Services
     {
         private Mock<IPetRepository>? _mockPetRepostory;
         private Mock<IPetDocumentEvidenceRepository>? _mockPetDocumentEvidenceRepository;
+        private Mock<IBreedRepository>? _mockBreedRepository;
 
         private PetService? _sut;
 
@@ -22,8 +23,9 @@ namespace Defra.PTS.Pet.Functions.Tests.Services
         {
             _mockPetRepostory = new Mock<IPetRepository>();
             _mockPetDocumentEvidenceRepository = new Mock<IPetDocumentEvidenceRepository>();
+            _mockBreedRepository = new Mock<IBreedRepository>();
 
-            _sut = new PetService(_mockPetRepostory.Object, _mockPetDocumentEvidenceRepository.Object);
+            _sut = new PetService(_mockPetRepostory.Object, _mockPetDocumentEvidenceRepository.Object, _mockBreedRepository.Object);
         }
 
         [Test]

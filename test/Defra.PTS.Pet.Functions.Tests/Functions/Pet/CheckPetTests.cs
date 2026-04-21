@@ -23,7 +23,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
         [TestCase("123456789012345", "123456789012345")]
         public void CheckMicrochip_WhenMicroChipExist_Then_ReturnsValidMicroChip(string microChipNumber, string expectedResult)
         {
-            var pets = new List<PetEntity>() { new PetEntity() { MicrochipNumber = microChipNumber } };
+            // var pets = new List<PetEntity>() { new PetEntity() { MicrochipNumber = microChipNumber } };
 
             var result = CheckPet.CheckMicrochip(_requestMoq.Object).GetAwaiter().GetResult();
             var okResult = result as OkObjectResult;
@@ -36,7 +36,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
         [TestCase("123456789012345", "")]
         public void CheckMicrochip_WhenMicroChipDoesntExist_Then_ReturnsEmptyMicroChip(string microChipNumber, string expectedResult)
         {
-            var pets = new List<PetEntity>();            
+            // var pets = new List<PetEntity>();
 
             var result = CheckPet.CheckMicrochip(_requestMoq.Object).GetAwaiter().GetResult();
             var okResult = result as OkObjectResult;
@@ -51,7 +51,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
         public void CheckMicrochip_WhenResultDoesntExist_Then_ReturnsNotFoundObjectResult(string microChipNumber)
         {
             var expectedResult = $"Cannot get pets for Microchip [{microChipNumber}]";
-            List<PetEntity>? pets = null;
+            // List<PetEntity>? pets = null;
             _requestMoq!.Setup(a => a.Path).Returns($"/api/microchip/{microChipNumber}");
 
             var result = CheckPet.CheckMicrochip(_requestMoq.Object).GetAwaiter().GetResult();

@@ -40,8 +40,8 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Breed
 
             _mockBreedService.Setup(a => a.GetBreeds(It.IsAny<IEnumerable<BreedEntity>>())).Returns(taskPets);            
 
-            var result = _sut!.GetBreed(_mockRequest.Object, entityPets);
-            var okResult = result as OkObjectResult; 
+            var result = _sut!.GetBreed(_mockRequest.Object);
+            var okResult = result.Result as OkObjectResult; 
 
             Assert.IsNotNull(okResult);
             Assert.AreEqual(200, okResult?.StatusCode);

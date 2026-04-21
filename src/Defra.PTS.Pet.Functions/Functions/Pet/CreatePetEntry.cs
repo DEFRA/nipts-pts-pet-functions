@@ -24,8 +24,7 @@ namespace Defra.PTS.Pet.Functions.Functions.Pet
         /// <param name="log"></param>
         /// <returns></returns>
         [Function("CreatePet")]
-        [OpenApiOperation(operationId: "CreatePet", tags: "Create")]
-        [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
+                [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
         [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(PetViewModel), Description = "Create Pet")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> CreatePet(

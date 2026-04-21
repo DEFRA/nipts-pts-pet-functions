@@ -1,43 +1,31 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using Defra.PTS.Pet.Domain.Entities;
+using Defra.PTS.Pet.ApiServices.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Microsoft.Azure.Functions.Worker;
 
 namespace Defra.PTS.Pet.Functions.Functions.Pet;
 
-public static class CheckPet
+public class CheckPet(IPetService petService)
 {
+    private readonly IPetService _petService = petService;
+
     /// <summary>
     /// Check Microchip by Microchipnumber
     /// </summary>
-    /// <param name="req"></param>
-    /// <param name="result"></param>        
-    /// <returns></returns>
     [Function("CheckMicrochip")]
-        [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-    [OpenApiParameter(name: "microchipnumber", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **Name** parameter")]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
-    public static IActionResult CheckMicrochip(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "microchip/{microchipnumber}")] HttpRequest req,
-        [Sql("SELECT [MicrochipNumber] FROM [dbo].[Pet] where [MicrochipNumber] = @Microchipnumber"
-        , "sql_db"
-        , System.Data.CommandType.Text
-        , parameters: "@Microchipnumber={microchipnumber}")] IEnumerable<PetEntity> result)
+    public async Task<IActionResult> CheckMicrochip(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "microchip/{microchipnumber}")] HttpRequest req)
     {
-        if (result == null)
+        var microchipNumber = req.RouteValues["microchipnumber"]?.ToString();
+        if (string.IsNullOrEmpty(microchipNumber))
         {
-            var microchipNumber = req.Path.Value.Split("/")[3];
-            return new NotFoundObjectResult($"Cannot get pets for Microchip [{microchipNumber}]");
-        }            
+            return new BadRequestObjectResult("Microchip number is required");
+        }
 
-        var microchipData = (result.FirstOrDefault() != null) ? result.First().MicrochipNumber : "";
-        return new OkObjectResult(microchipData);
+        var result = await _petService.CheckMicrochipAsync(microchipNumber);
+        return new OkObjectResult(result ?? "");
     }
 }

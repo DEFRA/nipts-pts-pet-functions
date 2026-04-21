@@ -1,18 +1,13 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Defra.PTS.Pet.ApiServices.Interface;
 using Defra.PTS.Pet.Domain.Entities;
-using Defra.PTS.Pet.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Functions.Worker;
 
-#pragma warning disable CA1822 
 namespace Defra.PTS.Pet.Functions.Functions.Breed;
 
 public class Breed(IBreedService breedService)
@@ -22,23 +17,19 @@ public class Breed(IBreedService breedService)
     /// <summary>
     /// Get Breed By SpeciesId
     /// </summary>
-    /// <param name="req"></param>
-    /// <param name="result"></param>        
-    /// <returns></returns>
     [Function("GetBreed")]
-    [OpenApiOperation(operationId: "GetBreed", tags: "Breeds")]
-    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-    [OpenApiParameter(name: "speciesId", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **SpeciesId** parameter")]
-        public IActionResult GetBreed(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "breed/{speciesId}")] HttpRequest req
-        , [Sql("SELECT [Id], [Name] FROM [dbo].[Breed] Where [SpeciesId] = @SpeciesId ORDER BY [Name] ASC"
-        , "sql_db"
-        , System.Data.CommandType.Text
-        , parameters: "@SpeciesId={speciesId}")] IEnumerable<BreedEntity> result)
+    public async Task<IActionResult> GetBreed(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "breed/{speciesId}")] HttpRequest req)
     {
-        if (result.ToList().Count < 1)
+        var speciesIdStr = req.RouteValues["speciesId"]?.ToString();
+        if (!int.TryParse(speciesIdStr, out var speciesId))
         {
-            var speciesId = req.RouteValues["speciesId"];
+            return new BadRequestObjectResult("Invalid speciesId");
+        }
+
+        var result = await _breedService.GetBreedsBySpeciesIdAsync(speciesId);
+        if (!result.Any())
+        {
             return new NotFoundObjectResult($"Cannot get breed for species Id [{speciesId}]");
         }
 
@@ -49,30 +40,23 @@ public class Breed(IBreedService breedService)
     /// <summary>
     /// Get Colours By SpeciesId
     /// </summary>
-    /// <param name="req"></param>
-    /// <param name="petColours"></param>        
-    /// <returns></returns>
     [Function("GetColours")]
-    [OpenApiOperation(operationId: "GetColours", tags: "Colours")]
-    [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-    [OpenApiParameter(name: "speciesId", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **SpeciesId** parameter")]
-
-
-    public IActionResult GetColours(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "colour/{speciesId}")] HttpRequest req
-        , [Sql(" SELECT [Id], [Name], [SpeciesId] FROM [dbo].[Colour] WHERE [SpeciesId] = @SpeciesId ORDER BY [Name] ASC"
-        , "sql_db"
-        , System.Data.CommandType.Text
-        , parameters: "@SpeciesId={speciesId}")] IEnumerable<ColourEntity> petColours)
+    public async Task<IActionResult> GetColours(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "colour/{speciesId}")] HttpRequest req)
     {
-        if (petColours.ToList().Count < 1)
+        var speciesIdStr = req.RouteValues["speciesId"]?.ToString();
+        if (!int.TryParse(speciesIdStr, out var speciesId))
         {
-            var speciesId = req.RouteValues["speciesId"];                
+            return new BadRequestObjectResult("Invalid speciesId");
+        }
+
+        var petColours = await _breedService.GetColoursBySpeciesIdAsync(speciesId);
+        if (!petColours.Any())
+        {
             return new NotFoundObjectResult($"Cannot get pet colours for species Id [{speciesId}]");
         }
-        
+
         return new OkObjectResult(petColours);
     }
 }
-#pragma warning restore CA1822
 

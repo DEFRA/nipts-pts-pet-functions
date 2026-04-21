@@ -10,10 +10,12 @@ namespace Defra.PTS.Pet.ApiServices.Implementation
 {
     public class PetService(
         IPetRepository petRepository,
-        IPetDocumentEvidenceRepository petDocumentEvidenceRepository) : IPetService
+        IPetDocumentEvidenceRepository petDocumentEvidenceRepository,
+        IBreedRepository breedRepository) : IPetService
     {        
         private readonly IPetRepository _petRepository = petRepository;
         private readonly IPetDocumentEvidenceRepository _petDocumentEvidenceRepository = petDocumentEvidenceRepository;
+        private readonly IBreedRepository _breedRepository = breedRepository;
 
         public async Task<Guid> CreatePet(PetViewModel petViewModel)
         {
@@ -73,6 +75,11 @@ namespace Defra.PTS.Pet.ApiServices.Implementation
         public async Task<bool> PerformHealthCheckLogic()
         {
             return await _petRepository.PerformHealthCheckLogic();
+        }
+
+        public async Task<string?> CheckMicrochipAsync(string microchipNumber)
+        {
+            return await _breedRepository.GetMicrochipNumberAsync(microchipNumber);
         }
     }  
 }

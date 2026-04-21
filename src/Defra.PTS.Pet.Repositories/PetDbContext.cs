@@ -9,5 +9,7 @@ namespace Defra.PTS.Pet.Repositories
     {
         public DbSet<PetEntity>? Pet { get; set; }
         public DbSet<PetDocumentEvidenceEntity>? PetDocumentEvidence { get; set; }
+        public DbSet<BreedEntity>? Breed { get; set; }
+        public DbSet<ColourEntity>? Colour { get; set; }
     }
 }

@@ -8,7 +8,6 @@ using Defra.PTS.Pet.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Microsoft.Azure.Functions.Worker;
 
 namespace Defra.PTS.Pet.Functions.Functions.Pet
@@ -20,13 +19,7 @@ namespace Defra.PTS.Pet.Functions.Functions.Pet
         /// <summary>
         /// Create Pet By Pet Details
         /// </summary>
-        /// <param name="req"></param>
-        /// <param name="log"></param>
-        /// <returns></returns>
         [Function("CreatePet")]
-                [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
-        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(PetViewModel), Description = "Create Pet")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> CreatePet(
              [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "createpet")] HttpRequest req,
              ILogger log)

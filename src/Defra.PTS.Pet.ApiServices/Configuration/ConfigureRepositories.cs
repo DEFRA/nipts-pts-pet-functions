@@ -24,6 +24,7 @@ namespace Defra.PTS.Pet.ApiServices.Configuration
             services.AddScoped<DbContext, PetDbContext>();
             services.AddScoped<IPetRepository, PetRepository>();
             services.AddScoped<IPetDocumentEvidenceRepository, PetDocumentEvidenceRepository>();
+            services.AddScoped<IBreedRepository, BreedRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
             return services;

@@ -1,4 +1,6 @@
 ﻿using Defra.PTS.Pet.ApiServices.Implementation;
+using Defra.PTS.Pet.Repositories.Interface;
+using Moq;
 using Defra.PTS.Pet.Domain.Entities;
 using Defra.PTS.Pet.Domain.Models;
 using NUnit.Framework;
@@ -14,11 +16,13 @@ namespace Defra.PTS.Pet.Functions.Tests.Services
     public class BreedServiceTests
     {
         private BreedService? _sut;
+        private Mock<IBreedRepository>? _mockRepo;
 
         [SetUp]
         public void Setup()
         {
-            _sut = new BreedService();
+            _mockRepo = new Mock<IBreedRepository>();
+            _sut = new BreedService(_mockRepo.Object);
         }
 
         [Test]

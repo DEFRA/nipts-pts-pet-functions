@@ -67,8 +67,8 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Breed
             };
             _mockRequest!.Setup(a => a.RouteValues).Returns(routeDict);
 
-            var result = _sut!.GetBreed(_mockRequest.Object, entityPets);
-            var notFoundResult = result as NotFoundObjectResult;
+            var result = _sut!.GetBreed(_mockRequest.Object);
+            var notFoundResult = result.Result as NotFoundObjectResult;
 
             Assert.IsNotNull(notFoundResult);
             Assert.AreEqual(404, notFoundResult?.StatusCode);

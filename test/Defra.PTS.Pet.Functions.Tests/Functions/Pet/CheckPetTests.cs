@@ -25,7 +25,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
         {
             var pets = new List<PetEntity>() { new PetEntity() { MicrochipNumber = microChipNumber } };
 
-            var result = CheckPet.CheckMicrochip(_requestMoq.Object, pets).GetAwaiter().GetResult();
+            var result = CheckPet.CheckMicrochip(_requestMoq.Object).GetAwaiter().GetResult();
             var okResult = result as OkObjectResult;
 
             Assert.IsNotNull(okResult);
@@ -38,7 +38,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
         {
             var pets = new List<PetEntity>();            
 
-            var result = CheckPet.CheckMicrochip(_requestMoq.Object, pets).GetAwaiter().GetResult();
+            var result = CheckPet.CheckMicrochip(_requestMoq.Object).GetAwaiter().GetResult();
             var okResult = result as OkObjectResult;
 
             Assert.IsNotNull(okResult);
@@ -54,7 +54,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
             List<PetEntity>? pets = null;
             _requestMoq!.Setup(a => a.Path).Returns($"/api/microchip/{microChipNumber}");
 
-            var result = CheckPet.CheckMicrochip(_requestMoq.Object, pets).GetAwaiter().GetResult();
+            var result = CheckPet.CheckMicrochip(_requestMoq.Object).GetAwaiter().GetResult();
             var notFoundResult = result as NotFoundObjectResult;
 
             Assert.IsNotNull(notFoundResult);

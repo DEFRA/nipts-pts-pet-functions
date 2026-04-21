@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 using Defra.PTS.Pet.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.Azure.Functions.Worker;
 
 namespace Defra.PTS.Pet.Functions.Functions.Pet;
 
@@ -23,7 +20,7 @@ public static class CheckPet
     /// <param name="req"></param>
     /// <param name="result"></param>        
     /// <returns></returns>
-    [FunctionName("CheckMicrochip")]
+    [Function("CheckMicrochip")]
     [OpenApiOperation(operationId: "CheckMicrochip", tags: "Check")]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
     [OpenApiParameter(name: "microchipnumber", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **Name** parameter")]

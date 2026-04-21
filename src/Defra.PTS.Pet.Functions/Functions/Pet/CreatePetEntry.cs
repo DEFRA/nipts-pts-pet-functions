@@ -13,6 +13,7 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.Azure.Functions.Worker;
 
 namespace Defra.PTS.Pet.Functions.Functions.Pet
 {
@@ -26,7 +27,7 @@ namespace Defra.PTS.Pet.Functions.Functions.Pet
         /// <param name="req"></param>
         /// <param name="log"></param>
         /// <returns></returns>
-        [FunctionName("CreatePet")]
+        [Function("CreatePet")]
         [OpenApiOperation(operationId: "CreatePet", tags: "Create")]
         [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
         [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(PetViewModel), Description = "Create Pet")]

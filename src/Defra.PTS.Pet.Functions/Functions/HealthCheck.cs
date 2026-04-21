@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 using Defra.PTS.Pet.ApiServices.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.Azure.Functions.Worker;
 
 namespace Defra.PTS.Pet.Functions.Functions;
 
@@ -17,7 +15,7 @@ public class HealthCheck(IPetService petService)
 {
     private readonly IPetService _petService = petService;
 
-    [FunctionName("HealthCheck")]
+    [Function("HealthCheck")]
     [OpenApiOperation(operationId: "Run", tags: "name")]
     [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
     public async Task<IActionResult> Run(

@@ -9,12 +9,9 @@ using Defra.PTS.Pet.Domain.Entities;
 using Defra.PTS.Pet.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
-using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.Azure.Functions.Worker;
 
 #pragma warning disable CA1822 
 namespace Defra.PTS.Pet.Functions.Functions.Breed;
@@ -29,7 +26,7 @@ public class Breed(IBreedService breedService)
     /// <param name="req"></param>
     /// <param name="result"></param>        
     /// <returns></returns>
-    [FunctionName("GetBreed")]
+    [Function("GetBreed")]
     [OpenApiOperation(operationId: "GetBreed", tags: "Breeds")]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
     [OpenApiParameter(name: "speciesId", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **SpeciesId** parameter")]
@@ -57,7 +54,7 @@ public class Breed(IBreedService breedService)
     /// <param name="req"></param>
     /// <param name="petColours"></param>        
     /// <returns></returns>
-    [FunctionName("GetColours")]
+    [Function("GetColours")]
     [OpenApiOperation(operationId: "GetColours", tags: "Colours")]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
     [OpenApiParameter(name: "speciesId", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **SpeciesId** parameter")]

@@ -104,7 +104,8 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Breed
             _mockRequest!.Setup(a => a.RouteValues).Returns(routeDict);            
 
             var result = _sut!.GetColours(_mockRequest.Object, entityPetColours);
-            var notFoundResult = result as NotFoundObjectResult;
+            var notFoundResult = result as ObjectResult;
+            // If GetColours returns Task<IActionResult>, use: var notFoundResult = await result as NotFoundObjectResult; (and make the test async)
 
             Assert.IsNotNull(notFoundResult);
             Assert.AreEqual(404, notFoundResult?.StatusCode);

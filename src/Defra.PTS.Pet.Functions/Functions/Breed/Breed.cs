@@ -29,8 +29,7 @@ public class Breed(IBreedService breedService)
     [OpenApiOperation(operationId: "GetBreed", tags: "Breeds")]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
     [OpenApiParameter(name: "speciesId", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **SpeciesId** parameter")]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
-    public IActionResult GetBreed(
+        public IActionResult GetBreed(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "breed/{speciesId}")] HttpRequest req
         , [Sql("SELECT [Id], [Name] FROM [dbo].[Breed] Where [SpeciesId] = @SpeciesId ORDER BY [Name] ASC"
         , "sql_db"
@@ -57,7 +56,7 @@ public class Breed(IBreedService breedService)
     [OpenApiOperation(operationId: "GetColours", tags: "Colours")]
     [OpenApiSecurity("function_key", SecuritySchemeType.ApiKey, Name = "code", In = OpenApiSecurityLocationType.Query)]
     [OpenApiParameter(name: "speciesId", In = ParameterLocation.Path, Required = true, Type = typeof(string), Description = "The **SpeciesId** parameter")]
-    [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(string), Description = "The OK response")]
+
 
     public IActionResult GetColours(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "colour/{speciesId}")] HttpRequest req

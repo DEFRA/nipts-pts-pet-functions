@@ -40,8 +40,8 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Breed
 
             _mockBreedService.Setup(a => a.GetBreeds(It.IsAny<IEnumerable<BreedEntity>>())).Returns(taskPets);            
 
-            var result = _sut!.GetBreed(_mockRequest.Object);
-            var okResult = result.Result as OkObjectResult; 
+            var result = _sut!.GetBreed(_mockRequest.Object).Result;
+            var okResult = result as OkObjectResult; 
 
             Assert.IsNotNull(okResult);
             Assert.AreEqual(200, okResult?.StatusCode);
@@ -67,8 +67,8 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Breed
             };
             _mockRequest!.Setup(a => a.RouteValues).Returns(routeDict);
 
-            var result = _sut!.GetBreed(_mockRequest.Object);
-            var notFoundResult = result.Result as NotFoundObjectResult;
+            var result = _sut!.GetBreed(_mockRequest.Object).Result;
+            var notFoundResult = result as NotFoundObjectResult;
 
             Assert.IsNotNull(notFoundResult);
             Assert.AreEqual(404, notFoundResult?.StatusCode);
@@ -82,7 +82,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Breed
         {
             List<ColourEntity> entityPetColours = new() { new ColourEntity() { Id = 1, Name = "Brown", SpeciesId = 1 } };                   
 
-            var result = _sut!.GetColours(_mockRequest!.Object, entityPetColours);
+            var result = _sut!.GetColours(_mockRequest!.Object).Result;
             var okResult = result as OkObjectResult;
 
             Assert.IsNotNull(okResult);
@@ -103,7 +103,7 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Breed
             };
             _mockRequest!.Setup(a => a.RouteValues).Returns(routeDict);            
 
-            var result = _sut!.GetColours(_mockRequest.Object, entityPetColours);
+            var result = _sut!.GetColours(_mockRequest.Object).Result;
             var notFoundResult = result as ObjectResult;
             // If GetColours returns Task<IActionResult>, use: var notFoundResult = await result as NotFoundObjectResult; (and make the test async)
 

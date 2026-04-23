@@ -1,3 +1,4 @@
+#if DEBUG
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,6 @@ using Microsoft.Azure.Functions.Worker;
 
 namespace Defra.PTS.Pet.Functions.Functions;
 
-#if DEBUG
 [ExcludeFromCodeCoverage]
 public class Swagger
 {

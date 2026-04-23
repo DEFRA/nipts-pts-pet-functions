@@ -55,6 +55,21 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Pet
             Assert.AreEqual(expectedResult, okResult?.Value);
         }
 
+        [Test]
+        public async Task CheckMicrochip_WhenMicrochipNumberIsNull_Then_ReturnsBadRequest()
+        {
+            var routeDict = new RouteValueDictionary { ["microchipnumber"] = null };
+            _requestMoq.Setup(a => a.RouteValues).Returns(routeDict);
+
+            var checkPet = new CheckPet(_mockPetService.Object);
+            var result = await checkPet.CheckMicrochip(_requestMoq.Object);
+            var badRequestResult = result as BadRequestObjectResult;
+
+            Assert.IsNotNull(badRequestResult);
+            Assert.AreEqual(400, badRequestResult?.StatusCode);
+            Assert.AreEqual("Microchip number is required", badRequestResult?.Value);
+        }
+
         [TestCase("123456789012345")]
         public async Task CheckMicrochip_WhenMicrochipNumberIsEmpty_Then_ReturnsBadRequest(string microChipNumber)
         {

@@ -54,6 +54,33 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Breed
             _mockBreedService.Verify(a => a.GetBreeds(It.IsAny<IEnumerable<BreedEntity>>()), Times.Once);
         }
 
+        [Test]
+        public async Task GetBreed_WhenSpeciesIdIsInvalid_Then_ReturnsBadRequest()
+        {
+            var routeDict = new RouteValueDictionary { ["speciesId"] = "abc" };
+            _mockRequest.Setup(a => a.RouteValues).Returns(routeDict);
+
+            var result = await _sut!.GetBreed(_mockRequest.Object);
+            var badRequestResult = result as BadRequestObjectResult;
+
+            Assert.IsNotNull(badRequestResult);
+            Assert.AreEqual(400, badRequestResult?.StatusCode);
+            Assert.AreEqual("Invalid speciesId", badRequestResult?.Value);
+        }
+
+        [Test]
+        public async Task GetBreed_WhenSpeciesIdIsNull_Then_ReturnsBadRequest()
+        {
+            var routeDict = new RouteValueDictionary { ["speciesId"] = null };
+            _mockRequest.Setup(a => a.RouteValues).Returns(routeDict);
+
+            var result = await _sut!.GetBreed(_mockRequest.Object);
+            var badRequestResult = result as BadRequestObjectResult;
+
+            Assert.IsNotNull(badRequestResult);
+            Assert.AreEqual(400, badRequestResult?.StatusCode);
+        }
+
         [TestCase(1)]
         public async Task GetBreed_WhenResultDoesntExist_Then_ReturnsNotFoundObjectResult(int speciesId)
         {
@@ -92,6 +119,33 @@ namespace Defra.PTS.Pet.Functions.Tests.Functions.Breed
             Assert.IsNotNull(okResult);
             Assert.AreEqual(200, okResult?.StatusCode);
             Assert.AreEqual(entityPetColours, okResult?.Value);            
+        }
+
+        [Test]
+        public async Task GetColours_WhenSpeciesIdIsInvalid_Then_ReturnsBadRequest()
+        {
+            var routeDict = new RouteValueDictionary { ["speciesId"] = "abc" };
+            _mockRequest.Setup(a => a.RouteValues).Returns(routeDict);
+
+            var result = await _sut!.GetColours(_mockRequest.Object);
+            var badRequestResult = result as BadRequestObjectResult;
+
+            Assert.IsNotNull(badRequestResult);
+            Assert.AreEqual(400, badRequestResult?.StatusCode);
+            Assert.AreEqual("Invalid speciesId", badRequestResult?.Value);
+        }
+
+        [Test]
+        public async Task GetColours_WhenSpeciesIdIsNull_Then_ReturnsBadRequest()
+        {
+            var routeDict = new RouteValueDictionary { ["speciesId"] = null };
+            _mockRequest.Setup(a => a.RouteValues).Returns(routeDict);
+
+            var result = await _sut!.GetColours(_mockRequest.Object);
+            var badRequestResult = result as BadRequestObjectResult;
+
+            Assert.IsNotNull(badRequestResult);
+            Assert.AreEqual(400, badRequestResult?.StatusCode);
         }
 
         [TestCase(1)]

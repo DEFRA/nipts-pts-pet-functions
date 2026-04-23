@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Hosting;
-
 using Defra.PTS.Pet.ApiServices.Configuration;
 using Defra.PTS.Pet.Functions.Configuration;
 using Microsoft.Extensions.Configuration;

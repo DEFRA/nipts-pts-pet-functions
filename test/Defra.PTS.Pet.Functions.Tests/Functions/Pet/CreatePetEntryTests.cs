@@ -4,7 +4,6 @@ using Defra.PTS.Pet.Functions.Functions.Breed;
 using Defra.PTS.Pet.Functions.Functions.Pet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Management.ContainerService.Fluent.Models;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;

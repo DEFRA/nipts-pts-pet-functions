@@ -1,21 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
-	<DocumentationFile>bin\Debug\net6.0\Defra.PTS.Pet.Functions.xml</DocumentationFile>
+	<DocumentationFile>bin\Debug\net10.0\Defra.PTS.Pet.Functions.xml</DocumentationFile>
 	<GenerateDocumentationFile>False</GenerateDocumentationFile>
+	<OutputType>Exe</OutputType>
+	<ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Defra.Trade.Common.Api" Version="2.0.5" />
-    <PackageReference Include="Defra.Trade.Common.Functions" Version="2.7.2" />
-    <PackageReference Include="Defra.Trade.Common.Security" Version="2.0.5" />
-    <PackageReference Include="Defra.Trade.Common.Soc" Version="1.1.16" />
-    <PackageReference Include="Defra.Trade.Common.Sql" Version="2.0.3" />
-    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.OpenApi" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Sql" Version="3.0.534" />
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="2.51.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" OutputItemType="Analyzer" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http" Version="3.3.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="2.1.0" />
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.29.0-beta.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Defra.PTS.Pet.ApiServices\Defra.PTS.Pet.ApiServices.csproj" />
@@ -28,5 +27,12 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		  <CopyToPublishDirectory>Never</CopyToPublishDirectory>
 	  </None>
+	  <None Update="swagger.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+	  </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext" />
   </ItemGroup>
 </Project>

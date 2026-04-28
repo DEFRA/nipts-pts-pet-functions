@@ -12,5 +12,7 @@ namespace Defra.PTS.Pet.ApiServices.Interface
         Task<Guid> CreatePet(PetViewModel petViewModel);
 
         Task<bool> PerformHealthCheckLogic();
+
+        Task<string?> CheckMicrochipAsync(string microchipNumber);
     }
 }

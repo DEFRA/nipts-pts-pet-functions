@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
+using Microsoft.OpenApi.Models;
 
 namespace Defra.PTS.Pet.Functions.Functions.Pet
 {
@@ -20,6 +22,9 @@ namespace Defra.PTS.Pet.Functions.Functions.Pet
         /// Create Pet By Pet Details
         /// </summary>
         [Function("CreatePet")]
+        [OpenApiOperation(operationId: "CreatePet", tags: new[] { "Pet" }, Summary = "Create a new pet", Description = "Creates a new pet entry in the system")]
+        [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(PetViewModel), Required = true, Description = "Pet data")]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.Created, contentType: "application/json", bodyType: typeof(Guid), Description = "Pet created successfully")]
         public async Task<IActionResult> CreatePet(
              [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "createpet")] HttpRequest req,
              ILogger log)

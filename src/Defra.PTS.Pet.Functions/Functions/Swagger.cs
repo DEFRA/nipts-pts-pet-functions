@@ -1,4 +1,3 @@
-#if DEBUG
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -70,4 +69,3 @@ public class Swagger
         };
     }
 }
-#endif

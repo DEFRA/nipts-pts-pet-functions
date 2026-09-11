@@ -56,7 +56,7 @@ namespace Defra.PTS.Pet.ApiServices.Implementation
 
             var petDocumentEvidence = new List<PetDocumentEvidenceEntity>();
 
-            foreach (var item in petViewModel!.PetIdentificationEvidenceViewModel ?? Enumerable.Empty<PetIdentificationEvidenceViewModel>())
+            foreach (var item in petViewModel.PetIdentificationEvidenceViewModel ?? Enumerable.Empty<PetIdentificationEvidenceViewModel>())
             {
                 petDocumentEvidence.Add(new PetDocumentEvidenceEntity()
                 {

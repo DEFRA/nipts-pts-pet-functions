@@ -46,7 +46,7 @@ namespace Defra.PTS.Pet.ApiServices.Implementation
                 PetSpecies.Cat
             };
 
-            if (!speciesWithBreed.Contains(petViewModel!.PetSpecies.PetSpecies))
+            if (!speciesWithBreed.Contains(petViewModel.PetSpecies.PetSpecies))
             {
                 newPetDbEntry.BreedId = null;
                 newPetDbEntry.BreedTypeId = null;

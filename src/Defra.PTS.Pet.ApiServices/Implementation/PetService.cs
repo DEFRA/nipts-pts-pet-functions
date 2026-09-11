@@ -46,7 +46,7 @@ namespace Defra.PTS.Pet.ApiServices.Implementation
                 PetSpecies.Cat
             };
 
-            if (!speciesWithBreed.Contains(petViewModel!.PetSpecies.PetSpecies))
+            if (!speciesWithBreed.Contains(petViewModel.PetSpecies.PetSpecies))
             {
                 newPetDbEntry.BreedId = null;
                 newPetDbEntry.BreedTypeId = null;
@@ -56,7 +56,7 @@ namespace Defra.PTS.Pet.ApiServices.Implementation
 
             var petDocumentEvidence = new List<PetDocumentEvidenceEntity>();
 
-            foreach (var item in petViewModel!.PetIdentificationEvidenceViewModel ?? Enumerable.Empty<PetIdentificationEvidenceViewModel>())
+            foreach (var item in petViewModel.PetIdentificationEvidenceViewModel ?? Enumerable.Empty<PetIdentificationEvidenceViewModel>())
             {
                 petDocumentEvidence.Add(new PetDocumentEvidenceEntity()
                 {
